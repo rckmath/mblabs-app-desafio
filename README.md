@@ -19,12 +19,13 @@ This app was developed for an intership at MB Labs.
 :star: Redux\
 :star: PostgreSQL\
 :star: Yarn\
+:star: pgAdmin\
 :star: Visual Studio Code\
 :star: Photoshop\
-:star: Spotify\
+:star: Spotify
 
 # Special thanks to
 
-[Rockeseat](https://rocketseat.com.br/)
-[MB Labs](http://www.mblabs.com.br/)
+[Rockeseat](https://rocketseat.com.br/)\
+[MB Labs](http://www.mblabs.com.br/)\
 [Marcos A. Jr. Vasconcellos](https://github.com/MarcosJr1)
