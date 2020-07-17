@@ -10,6 +10,8 @@ This app was developed for an intership at MB Labs.
 - Users can pay for the events tickets through credit card, money and bank slip;
 - Institutions can create events and it's details;
 
+![App preview](https://i.imgur.com/41WnG8x.png)
+
 # Used technologies and development environment
 
 :star: React Native\
@@ -26,6 +28,6 @@ This app was developed for an intership at MB Labs.
 
 # Special thanks to
 
-[Rockeseat](https://rocketseat.com.br/)\
-[MB Labs](http://www.mblabs.com.br/)\
-[Marcos A. Jr. Vasconcellos](https://github.com/MarcosJr1)
+**[Rockeseat](https://rocketseat.com.br/)**\
+**[MB Labs](http://www.mblabs.com.br/)**\
+**[Marcos A. Jr. Vasconcellos](https://github.com/MarcosJr1)**
