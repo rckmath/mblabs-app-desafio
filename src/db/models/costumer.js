@@ -20,8 +20,7 @@ class Costumer extends Model {
             birthDate: {
                 type: DataTypes.DATE,
                 field: 'dt_nasc_cliente',
-            }
-
+            },
         }, {
             sequelize,
             tableName: 'Cliente',
