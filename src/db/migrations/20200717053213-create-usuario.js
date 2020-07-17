@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('UsuarioCliente', {
+    await queryInterface.createTable('Usuario', {
       id_usuario: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -14,12 +14,13 @@ module.exports = {
       },
       login_usuario: Sequelize.STRING,
       senha_usuario: Sequelize.STRING,
+      is_adm: Sequelize.BOOLEAN,
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('UsuarioCliente');
+    await queryInterface.dropTable('Usuario');
   }
 };
