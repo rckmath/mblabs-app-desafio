@@ -1,6 +1,6 @@
 # The project
 
-An event management app build up with React Native & Node.js which purpose is to be used by users who wants to seek events promoted by institutions and buy tickets for them.
+An WIP event management app build up with React Native & Node.js which purpose is to be used by users who wants to seek events promoted by institutions and buy tickets for them.
 
 This app was developed for an intership at MB Labs.
 
@@ -20,9 +20,11 @@ This app was developed for an intership at MB Labs.
 :star: Sequelize\
 :star: Redux\
 :star: PostgreSQL\
+:star: Postman\
 :star: Yarn\
 :star: pgAdmin\
 :star: Visual Studio Code\
+:star: Trello\
 :star: Photoshop\
 :star: Spotify
 

@@ -3,7 +3,7 @@ module.exports = {
     host: 'localhost',
     username: 'postgres',
     password: '',
-    database: 'nome-do-banco',
+    database: 'swift-events',
     define: {
         timestamps: true,
         underscored: true,
