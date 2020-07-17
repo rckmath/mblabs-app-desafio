@@ -4,12 +4,12 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('EnderecoCliente', {
       id_endereco: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
         autoIncrement: true,
       },
       id_cliente: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         references: { model: 'Cliente', key: 'id_cliente' },
       },
       cep_endereco: Sequelize.STRING,
