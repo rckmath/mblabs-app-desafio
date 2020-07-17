@@ -4,13 +4,12 @@ class User extends Model {
     static init(sequelize) {
         super.init({
             id: {
-                type: DataTypes.UUID,
+                type: DataTypes.INTEGER,
                 primaryKey: true,
                 field: 'id_usuario',
-                defaultValue: DataTypes.UUIDV4,
             },
             id_cli: {
-                type: DataTypes.UUID,
+                type: DataTypes.INTEGER,
                 field: 'id_cliente',
             },
             email: {

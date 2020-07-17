@@ -4,10 +4,9 @@ class Costumer extends Model {
     static init(sequelize) {
         super.init({
             id: {
-                type: DataTypes.UUID,
+                type: DataTypes.INTEGER,
                 primaryKey: true,
                 field: 'id_cliente',
-                defaultValue: DataTypes.UUIDV4,
             },
             name: {
                 type: DataTypes.STRING,

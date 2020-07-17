@@ -4,7 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Cliente', {
       id_cliente: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
@@ -13,6 +13,7 @@ module.exports = {
       dt_nasc_cliente: Sequelize.DATE,
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
+      deleted_at: Sequelize.DATE,
     });
   },
 
