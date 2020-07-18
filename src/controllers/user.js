@@ -1,5 +1,7 @@
 const User = require ('../db/models/user');
 const Status = require('../enumerators/status');
+const Utils = require('../utilities/utils');
+const bcrypt = require('bcrypt');
 
 module.exports = {
     // Busca todos os usuários cadastrados
@@ -23,22 +25,32 @@ module.exports = {
             if(exists)
                 return res.json (Status.DUPLICATED);
         } catch (err) {
-            return res.status(400).json(Status.FAILED, err);
+            return res.status(400).json(Status.FAILED);
         }
 
         /**
          * Criação do usuário
          */
         try {
-            const user_data = { name, cpf, birthday, email, password, type };
-            const user = await User.create(user_data);
+            /**
+             * Gera hash de senha usando bCrypt
+             */
+            const saltRounds = 10;
+            await bcrypt.hash(password, saltRounds, function(err, hash) {
+                if(err)
+                    res.json(Status.FAILED);
 
-            if(!user)
-                return res.json(Status.FAILED);
+                const user_data = { name, cpf, birthday, email, password: hash, type };
+                console.log(user_data);
 
-            return res.json(Status.SUCCESS);
+                const user = User.create(user_data);
+
+                if(!user)
+                    return res.json(Status.FAILED);
+                return res.json(Status.SUCCESS);
+            });
         } catch (err) {
-            return res.status(400).json(Status.FAILED, err)
+            return res.status(400).json(Status.FAILED);
         }
-    }
+    },
 };
