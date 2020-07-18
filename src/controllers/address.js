@@ -9,19 +9,17 @@ module.exports = {
 
         try {
             const user = await User.findByPk(id_user);
-
+            
             if (!user)
                 return res.status(400).json({ status: 'Usuário não encontrado!' });
 
-            const address = await Address.create({
-                zipcode,
-                num,
-                id_usuario: id_user,
-            });
+            address_data = { zipcode, num, id_usuario: id_user };
+
+            const address = await Address.create(address_data);
               
             return res.json(address);
         } catch (err) {
-            return res.json({ err });
+            return res.json(err);
         }
     }
 };

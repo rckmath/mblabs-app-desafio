@@ -15,10 +15,19 @@ class User extends Model {
             tableName: 'Usuario',
         });
     }
+
+    /**
+     * Função realiza os relacionamentos entre as tabelas do banco de dados
+     * @param {*} models: modelos do banco de dados
+     */
     static associate(models) {
         this.hasMany(models.Address, {
             foreignKey: 'id_usuario',
             as: 'addresses'
+        });
+        this.hasMany(models.Order, {
+            foreignKey: 'id_usuario',
+            as: 'orders'
         });
     }
 }

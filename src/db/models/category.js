@@ -12,7 +12,7 @@ class Category extends Model {
     }
 
     static associate(models) {
-        this.belongsToMany({
+        this.belongsToMany(models.Event, {
             foreignKey: 'id_categoria',
             through: 'EventoCategoria',
             as: 'events'

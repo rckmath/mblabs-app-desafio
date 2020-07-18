@@ -13,7 +13,7 @@ class Institution extends Model {
     }
 
     static associate(models) {
-        this.hasMany(models.User, { foreignKey: 'id_evento', as: 'events' });
+        this.hasMany(models.Event, { foreignKey: 'id_evento', as: 'events' });
     }
 }
 

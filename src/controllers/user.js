@@ -1,5 +1,4 @@
 const User = require ('../db/models/user');
-const bcrypt = require('bcrypt');
 
 module.exports = {
     async index(req, res) {
@@ -20,7 +19,7 @@ module.exports = {
             });
             
             if(exists)
-                return res.json ({ status: "Este endereço de e-mail já está cadastrado!" });
+                return res.json ({ status: "Endereço de e-mail já está cadastrado!" });
         } catch (err) {
             return res.status(400).json({ err });
         }

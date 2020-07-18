@@ -8,7 +8,7 @@ This app was developed for an intership at MB Labs.
 
 - Users can seek for events and buy tickets for them;
 - Users can pay for the events tickets through credit card, money and bank slip;
-- Users can follow institutions to be notificated by the app when an event of that institution will be happen.
+- Users can follow institutions and be notified by the app before an event of them occurs.
 
 ![App preview](https://i.imgur.com/ZAJfSPq.png)
 
