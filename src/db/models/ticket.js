@@ -1,14 +1,12 @@
 const { Model, DataTypes } = require('sequelize');
 
-class Address extends Model {
+class Ticket extends Model {
     static init(sequelize) {
         super.init({
-            id: { type: DataTypes.UUID, primaryKey: true, field: 'id_endereco', defaultValue: DataTypes.UUIDV4, },
-            zipcode: { type: DataTypes.STRING, field: 'cep_endereco', },
-            num: { type: DataTypes.INTEGER, field: 'num_endereco', },
+            id: { type: DataTypes.UUID, primaryKey: true, field: 'id_ingresso', defaultValue: DataTypes.UUIDV4, },           
         }, {
             sequelize,
-            tableName: 'Endereco',
+            tableName: 'Ingresso',
         });
     }
 
@@ -17,11 +15,15 @@ class Address extends Model {
      * @param {*} models: modelos do banco de dados
      */
     static associate(models) {
+        this.belongsTo(models.Order, {
+            foreignKey: 'id_pedido',
+            as: 'order'
+        });
         this.belongsTo(models.User, {
             foreignKey: 'id_usuario',
             as: 'user'
-        });
+        })
     }
 }
 
-module.exports = Address;
+module.exports = Ticket;
