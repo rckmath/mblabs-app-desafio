@@ -4,8 +4,8 @@ class Event extends Model {
     static init(sequelize) {
         super.init({
             id: { type: DataTypes.UUID, primaryKey: true, field: 'id_evento', defaultValue: DataTypes.UUIDV4, },
-            name: { type: DataTypes.STRING, field: 'nome_categoria', },
-            description: { type: DataTypes.STRING, field: 'descricacao_categoria', },
+            name: { type: DataTypes.STRING, field: 'nome_evento', },
+            description: { type: DataTypes.STRING, field: 'descricao_evento', },
             tickets_qty: { type: DataTypes.INTEGER, field: 'qtd_ingr_disponiveis', },
             ticket_val: { type: DataTypes.DECIMAL,  field: 'valor_ingresso', },
             event_date: { type: DataTypes.DATE, field: 'data_evento', },
