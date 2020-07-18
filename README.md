@@ -1,4 +1,4 @@
-# The project
+# SwiftEventos
 
 An WIP event management app build up with React Native & Node.js which purpose is to be used by users who wants to seek events promoted by institutions and buy tickets for them.
 
@@ -8,9 +8,9 @@ This app was developed for an intership at MB Labs.
 
 - Users can seek for events and buy tickets for them;
 - Users can pay for the events tickets through credit card, money and bank slip;
-- Institutions can create events and it's details;
+- Users can follow institutions to be notificated by the app when an event of that institution will be happen.
 
-![App preview](https://i.imgur.com/41WnG8x.png)
+![App preview](https://i.imgur.com/ZAJfSPq.png)
 
 # Used technologies and development environment
 

@@ -14,8 +14,8 @@ module.exports = {
                 return res.status(400).json({ status: 'Usuário não encontrado!' });
 
             const address = await Address.create({
-                zipcode: zipcode,
-                num: num,
+                zipcode,
+                num,
                 id_usuario: id_user,
             });
               
