@@ -1,18 +1,15 @@
 const { Model, DataTypes } = require('sequelize');
 
-class CostumerAddress extends Model {
+class Address extends Model {
     static init(sequelize) {
         super.init({
             id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 primaryKey: true,
                 field: 'id_endereco',
+                defaultValue: DataTypes.UUIDV4,
             },
-            id_cli: {
-                type: DataTypes.INTEGER,
-                field: 'id_cliente',
-            },
-            cep: {
+            zipcode: {
                 type: DataTypes.STRING,
                 field: 'cep_endereco',
             },
@@ -22,9 +19,13 @@ class CostumerAddress extends Model {
             },
         }, {
             sequelize,
-            tableName: 'EnderecoCliente',
+            tableName: 'Endereco',
         });
+    }
+
+    static associate(models) {
+        this.belongsTo(models.User, { foreignKey: 'id_usuario', as: 'user' });
     }
 }
 
-module.exports = CostumerAddress;
+module.exports = Address;

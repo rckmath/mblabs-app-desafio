@@ -4,13 +4,22 @@ class User extends Model {
     static init(sequelize) {
         super.init({
             id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 primaryKey: true,
                 field: 'id_usuario',
+                defaultValue: DataTypes.UUIDV4,
             },
-            id_cli: {
-                type: DataTypes.INTEGER,
-                field: 'id_cliente',
+            name: {
+                type: DataTypes.STRING,
+                field: 'nome_cliente',
+            },
+            cpf: {
+                type: DataTypes.STRING,
+                field: 'cpf_cliente',
+            },
+            birthday: {
+                type: DataTypes.DATE,
+                field: 'dt_nasc_cliente',
             },
             email: {
                 type: DataTypes.STRING,
@@ -28,6 +37,9 @@ class User extends Model {
             sequelize,
             tableName: 'Usuario',
         });
+    }
+    static associate(models) {
+        this.hasMany(models.Address, { foreignKey: 'user_id', as: 'addresses' });
     }
 }
 
