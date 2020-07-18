@@ -4,20 +4,17 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Usuario', {
       id_usuario: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
-        autoIncrement: true,
       },
-      id_cliente: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Cliente', key: 'id_cliente' },
-      },
+      nome_cliente: Sequelize.STRING,
+      cpf_cliente: Sequelize.STRING,
+      dt_nasc_cliente: Sequelize.DATE,
       email_usuario: Sequelize.STRING,
       senha_usuario: Sequelize.STRING,
       tipo_usuario: Sequelize.INTEGER,
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
-      deleted_at: Sequelize.DATE,
     });
   },
 

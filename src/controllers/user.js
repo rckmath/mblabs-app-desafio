@@ -1,48 +1,33 @@
 const User = require ('../db/models/user');
-const Costumer = require('../db/models/costumer');
-const CostumerAddress = require('../db/models/costumer-address');
-
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
-module.exports = { 
+module.exports = {
+    async index(req, res) {
+        const users = await User.findAll();
 
+        return res.json(users);
+    },
     // Cadastra um novo usuário no banco de dados
     async create(req, res) {
-        const { name, cpf, birthday, email, pass, postal_code, num, profile_type} = req.body;
-        
-        /**
-         * Agrupando dados por tabela
-         */ 
-        const costumer_data = { name, cpf, birthday };
-        const user_data = { email, pass };
-        const address_data = { postal_code, num };
+        const { name, cpf, birthday, email, password, type } = req.body;
 
+        /**
+         * Verifica se usuário já está cadastrado
+         */
         try {
             exists = await User.findOne({ 
                 where: { email },
             });
-
-            console.log("Aqui");
+            
             if(exists)
                 return res.json ({ status: "Este endereço de e-mail já está cadastrado!" });
         } catch (err) {
-            return res.status(400).json({ status: err });
+            return res.status(400).json({ err });
         }
 
-        console.log("passou");
+        const user_data = { name, cpf, birthday, email, password, type };
+        const user = await User.create(user_data);
 
-        try {
-            const costumer = await Costumer.create(costumer_data); 
-            const costumer_address = await CostumerAddress.create(address_data);
-
-            await bcrypt.hash(user.pass, saltRounds, function(err, hash) {
-                const user = User.create(user_data);
-            });
-        } catch (err) {
-            return res.json({ status: "Falha na criação do usuário: " + err });
-        }
-        
-        return res.json({ status: "Cadastrado com sucesso!" });
+        return res.json(user);
     }
 };
