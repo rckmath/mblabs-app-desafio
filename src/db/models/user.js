@@ -29,6 +29,10 @@ class User extends Model {
             foreignKey: 'id_usuario',
             as: 'orders'
         });
+        this.hasMany(models.Ticket, {
+            foreignKey: 'id_usuario',
+            as: 'tickets'
+        });
     }
 }
 

@@ -12,8 +12,12 @@ class Institution extends Model {
         });
     }
 
+    /**
+     * Função realiza os relacionamentos entre as tabelas do banco de dados
+     * @param {*} models: modelos do banco de dados
+     */
     static associate(models) {
-        this.hasMany(models.Event, { foreignKey: 'id_evento', as: 'events' });
+        this.hasMany(models.Event, { foreignKey: 'id_instituicao', as: 'events' });
     }
 }
 

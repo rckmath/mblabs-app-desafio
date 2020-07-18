@@ -18,11 +18,23 @@ class Event extends Model {
         });
     }
 
+    /**
+     * Função realiza os relacionamentos entre as tabelas do banco de dados
+     * @param {*} models: modelos do banco de dados
+     */
     static associate(models) {
+        this.belongsTo(models.Institution, {
+            foreignKey: 'id_instituicao',
+            as: 'institution'
+        });
         this.belongsToMany(models.Category, {
             foreignKey: 'id_evento',
             through: 'EventoCategoria',
             as: 'categories'
+        });
+        this.hasMany(models.Ticket, {
+            foreignKey: 'id_evento',
+            as: 'items'
         });
     }
 }

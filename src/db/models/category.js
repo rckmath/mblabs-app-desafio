@@ -11,6 +11,10 @@ class Category extends Model {
         });
     }
 
+    /**
+     * Função realiza os relacionamentos entre as tabelas do banco de dados
+     * @param {*} models: modelos do banco de dados
+     */
     static associate(models) {
         this.belongsToMany(models.Event, {
             foreignKey: 'id_categoria',
