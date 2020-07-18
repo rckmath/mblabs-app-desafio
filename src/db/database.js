@@ -2,7 +2,7 @@ module.exports = {
     dialect: 'postgres',
     host: 'localhost',
     username: 'postgres',
-    password: 'android.321',
+    password: '@p4ssdb.',
     database: 'swift-events',
     define: {
         timestamps: true,
