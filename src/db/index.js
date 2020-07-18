@@ -16,6 +16,9 @@ const Ticket = require('./models/ticket');
 // Definindo conexão entre ORM e banco de dados
 const conn = new Sequelize(dbConfig);
 
+/**
+ * Inicializando models
+ */
 User.init(conn);
 Address.init(conn);
 Institution.init(conn);
@@ -25,6 +28,9 @@ Order.init(conn);
 OrderItem.init(conn);
 Ticket.init(conn);
 
+/**
+ * Passando os modelos de entidades para associá-las
+ */
 User.associate(conn.models);
 Address.associate(conn.models);
 Institution.associate(conn.models);

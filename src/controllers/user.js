@@ -1,6 +1,8 @@
 const User = require ('../db/models/user');
+const Status = require('../enumerators/status');
 
 module.exports = {
+    // Busca todos os usuários cadastrados
     async index(req, res) {
         const users = await User.findAll();
 
@@ -19,14 +21,24 @@ module.exports = {
             });
             
             if(exists)
-                return res.json ({ status: "Endereço de e-mail já está cadastrado!" });
+                return res.json (Status.DUPLICATED);
         } catch (err) {
-            return res.status(400).json({ err });
+            return res.status(400).json(Status.FAILED, err);
         }
 
-        const user_data = { name, cpf, birthday, email, password, type };
-        const user = await User.create(user_data);
+        /**
+         * Criação do usuário
+         */
+        try {
+            const user_data = { name, cpf, birthday, email, password, type };
+            const user = await User.create(user_data);
 
-        return res.json(user);
+            if(!user)
+                return res.json(Status.FAILED);
+
+            return res.json(Status.SUCCESS);
+        } catch (err) {
+            return res.status(400).json(Status.FAILED, err)
+        }
     }
 };

@@ -1,8 +1,9 @@
 const Address = require ('../db/models/address');
 const User = require('../db/models/user');
+const Status = require('../enumerators/status');
 
 module.exports = {
-    // Cadastra um novo usuário no banco de dados
+    // Cadastra um novo endereço no banco de dados
     async create(req, res) {
         const { id_user } = req.params;
         const { zipcode, num } = req.body;
