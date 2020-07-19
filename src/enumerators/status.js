@@ -3,7 +3,8 @@ const Status = {
     FAILED: 2,      // Em caso de falha
     PENDING: 3,     // Pendente de aprovação ou requisição
     NOT_FOUND: 4,   // Não encontrado
-    DUPLICATED: 5   // Dado já existente
+    DUPLICATED: 5,  // Dado já existente
+    UNAUTHORIZED: 6 // Não autorizado
 };
 
 module.exports = Status;

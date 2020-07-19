@@ -25,7 +25,7 @@ module.exports = {
             if(exists)
                 return res.json (Status.DUPLICATED);
         } catch (err) {
-            return res.status(400).json(Status.FAILED);
+            return res.json({ status: Status.FAILED, error: err });
         }
 
         /**
@@ -50,7 +50,7 @@ module.exports = {
                 return res.json(Status.SUCCESS);
             });
         } catch (err) {
-            return res.status(400).json(Status.FAILED);
+            return res.json({ status: Status.FAILED, error: err });
         }
     },
 };

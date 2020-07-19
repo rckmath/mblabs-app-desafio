@@ -13,7 +13,10 @@ const routes = express.Router();
  */
 routes.get('/users', UserController.index);
 routes.post('/users', UserController.create);
-routes.post('/users/:id_user/address', AddressController.create);
+routes.post('/users/:id_user/addresses', AddressController.create);
+routes.put('/users/:id_user/:id_address', AddressController.updateAddress);
+routes.get('/users/:id_user/addresses', AddressController.index);
+routes.delete('/users/:id_user/:id_address', AddressController.deleteById);
 
 /**
  * Rotas pertencentes a instituição
@@ -29,8 +32,8 @@ routes.delete('/institutions', InstitutionController.deleteById);
 routes.get('/institutions/events', EventController.index);
 routes.get('/institutions/:id_institution/events', EventController.indexByInstitution);
 routes.post('/institutions/:id_institution/events', EventController.create);
-routes.put('/institutions/events', EventController.updateById);
-routes.delete('/institutions/events', EventController.deleteById);
+routes.put('/institutions/:id_event', EventController.updateById);
+routes.delete('/institutions/:id_event', EventController.deleteById);
 
 /**
  * Rotas pertencens a categoria

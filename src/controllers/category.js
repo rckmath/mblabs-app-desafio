@@ -10,6 +10,7 @@ module.exports = {
     },
     // Cadastra uma nova categoria no banco de dados
     async create(req, res) {
+        const { id_event } = req.params;
         const { name } = req.body;
 
         try {
@@ -21,7 +22,7 @@ module.exports = {
               
             return res.json(Status.SUCCESS);
         } catch (err) {
-            return res.json(Status.FAILED, err);
+            return res.json({ status: Status.FAILED, error: err });
         }
     },
     // Atualiza o nome da categoria
@@ -39,7 +40,7 @@ module.exports = {
 
             return res.json(Status.SUCCESS);
         } catch (err) {
-            return res.json(err);
+            return res.json({ status: Status.FAILED, error: err });
         }
     },
     // Deleta uma instituição
@@ -51,7 +52,7 @@ module.exports = {
                 return res.json(Status.SUCCESS);
             return res.json(Status.FAILED);
         } catch (err) {
-            return res.json(Status.FAILED, err);
+            return res.json({ status: Status.FAILED, error: err });
         }
     }
 };
