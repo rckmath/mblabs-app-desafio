@@ -14,9 +14,9 @@ const routes = express.Router();
 routes.get('/users', UserController.index);
 routes.post('/users', UserController.create);
 routes.post('/users/:id_user/addresses', AddressController.create);
-routes.put('/users/:id_user/:id_address', AddressController.updateAddress);
+routes.put('/users/:id_user/adresses/:id_address', AddressController.update);
 routes.get('/users/:id_user/addresses', AddressController.index);
-routes.delete('/users/:id_user/:id_address', AddressController.deleteById);
+routes.delete('/users/:id_user/addresses/:id_address', AddressController.deleteById);
 
 /**
  * Rotas pertencentes a instituição
@@ -24,16 +24,18 @@ routes.delete('/users/:id_user/:id_address', AddressController.deleteById);
 routes.get('/institutions', InstitutionController.index);
 routes.post('/institutions', InstitutionController.create);
 routes.put('/institutions', InstitutionController.updateById);
-routes.delete('/institutions', InstitutionController.deleteById);
+routes.delete('/institutions/:id_institution', InstitutionController.deleteById);
 
 /**
  * Rotas pertencentes ao evento
  */
 routes.get('/institutions/events', EventController.index);
 routes.get('/institutions/:id_institution/events', EventController.indexByInstitution);
+routes.get('/institutions/events/categories', CategoryController.index);
+routes.post('/institutions/events/:id_event/categories', CategoryController.create);
 routes.post('/institutions/:id_institution/events', EventController.create);
-routes.put('/institutions/:id_event', EventController.updateById);
-routes.delete('/institutions/:id_event', EventController.deleteById);
+routes.put('/institutions/:id_institution/events/:id_event', EventController.updateById);
+routes.delete('/institutions/:id_institution/events/:id_event', EventController.deleteById);
 
 /**
  * Rotas pertencens a categoria

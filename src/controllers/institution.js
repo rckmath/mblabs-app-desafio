@@ -4,7 +4,11 @@ const Status = require('../enumerators/status');
 module.exports = {
     // Busca todas as instituições cadastradas
     async index(req, res) {
-        const institutions = await Institution.findAll();
+        const institutions = await Institution.findAll({
+            attributes: {
+                exclude: ['createdAt', 'updatedAt']
+            }
+        });
 
         return res.json(institutions);
     },
@@ -44,12 +48,32 @@ module.exports = {
     },
     // Deleta uma instituição
     async deleteById(req, res){
-        const { id } = req.body;
+        const { id_institution } = req.params;
 
         try {
-            if(await Institution.destroy({ where: { id } }) == 1)
-                return res.json(Status.SUCCESS);
-            return res.json(Status.FAILED);
+            const institution = await Institution.findByPk(id_institution, {
+                include: {
+                    association: 'events',
+                }
+            });
+
+            if(!institution)
+                return res.json(Status.NOT_FOUND);
+
+            /**
+             * Desvincula os eventos (passados) deste instituicao sem apagá-los
+             */
+            if(institution.events){
+                await institution.events.forEach(event => {
+                    event.id_instituicao = null;
+                    event.save();
+                });
+            }
+
+            if(!await Institution.destroy({ where: { id: id_institution } }) == 1)
+                return res.json(Status.FAILED);
+
+            return res.json(Status.SUCCESS);
         } catch (err) {
             return res.json({ status: Status.FAILED, error: err });
         }

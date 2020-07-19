@@ -1,12 +1,19 @@
 const User = require ('../db/models/user');
 const Status = require('../enumerators/status');
-const Utils = require('../utilities/utils');
 const bcrypt = require('bcrypt');
 
 module.exports = {
     // Busca todos os usuários cadastrados
     async index(req, res) {
-        const users = await User.findAll();
+        const users = await User.findAll({
+            include: {
+                association: 'addresses',
+                attributes: ['zipcode', 'num'],
+            },
+            attributes: {
+                exclude: ['createdAt', 'updateAt', 'password']
+            }
+        });
 
         return res.json(users);
     },

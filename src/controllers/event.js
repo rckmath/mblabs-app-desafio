@@ -8,7 +8,18 @@ module.exports = {
     async index(req, res) {
         try {
             const systemDate = new Date();
-            const events = await Event.findAll();
+            const events = await Event.findAll({
+                attributes: {
+                    exclude: ['id', 'id_instituicao', 'createdAt', 'updatedAt']
+                },
+                include: {
+                    association: 'categories',
+                    attributes: ['name'],
+                    through: {
+                        attributes: [],
+                    },
+                }
+            });
 
             var availableEvents = [];
 
@@ -27,7 +38,10 @@ module.exports = {
         const { id_institution } = req.params;
         try {
              const events = await Event.findAll({
-                 where: { id_instituicao: id_institution }
+                 where: { id_instituicao: id_institution },
+                 attributes: {
+                     exclude: ['id', 'id_instituicao', 'createdAt', 'updatedAt']
+                 }
              });
 
              return res.json(events);
@@ -51,13 +65,16 @@ module.exports = {
                 where: { name: category_name }
             });
 
+            if(!category)
+                return res.json(Status.FAILED);
+
             const event_data = { name, description, tickets_qty, ticket_val, event_date, event_time, zipcode, num, id_instituicao: id_institution };
             const event = await Event.create(event_data);
 
-            await event.addCategory(category);
-
             if(!event)
                 return res.json(Status.FAILED);
+
+            await event.addCategory(category);
 
             return res.json(Status.SUCCESS);
         } catch (err) {
@@ -87,12 +104,29 @@ module.exports = {
     // Deleta um evento
     async deleteById(req, res){
         const { id_event } = req.params;
-
         try {
-            if(!await Event.destroy({ where: { id: id_event } }) == 1)  
-                return res.json(Status.FAILED);
+            const event = await Event.findByPk(id_event, {
+                include: {
+                    association: 'categories'
+                }
+            });
 
-            return res.json(Status.SUCCESS);
+            if(!event)
+                return res.json(Status.NOT_FOUND);
+
+            /**
+             * Remove a relação entre este evento e as categorias com que ele se relacionava
+             */
+            if(event.categories){
+                await event.categories.forEach(category => {
+                    event.removeCategory(category);
+                });
+            }
+
+            if(await Event.destroy({ where: { id: id_event } }) == 1)
+                return res.json(Status.SUCCESS);
+            
+            return res.json(Status.FAILED);
         } catch (err) {
             return res.json({ status: Status.FAILED, error: err });
         }

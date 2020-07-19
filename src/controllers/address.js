@@ -10,7 +10,7 @@ module.exports = {
         const user = await User.findByPk(id_user, {
             include: {
                 association: 'addresses',
-                attributes: ['zipcode', 'num'], 
+                attributes: ['zipcode', 'num'],
             },
         });
       
@@ -39,7 +39,7 @@ module.exports = {
             return res.json({ status: Status.FAILED, error: err });
         }
     },
-    async updateAddress(req, res) {
+    async update(req, res) {
         const { id_user, id_address } = req.params;
         const { zipcode, num } = req.body;
 
