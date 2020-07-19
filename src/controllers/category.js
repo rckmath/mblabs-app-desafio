@@ -1,22 +1,23 @@
-const Category = require ('../db/models/category');
-const Event = require ('../db/models/event');
+const CategoryEntity = require ('../db/models/category');
+const EventEntity = require ('../db/models/event');
 const Status = require('../enumerators/status');
+const Utils = require('../utilities/utils');
 
 module.exports = {
     // Retorna todas as categorias e os eventos relacionados a elas.
     async index(req, res) {
-        const categories = await Category.findAll({
+        const categories = await CategoryEntity.findAll({
             include: {
                 association: 'events',
                 attributes: {
-                    exclude: ['id', 'id_instituicao', 'createdAt', 'updatedAt'],
+                    exclude: 'id' + 'id_instituicao' + Utils.excludeAttributes,
                 },
                 through: { 
                     attributes: []
                 } 
             },
             attributes: {
-                exclude: ['id', 'createdAt', 'updatedAt'],
+                exclude: 'id' + Utils.excludeAttributes,
             }
         });
 
@@ -28,16 +29,14 @@ module.exports = {
         const { name } = req.body;
 
         try {
-            const event = await Event.findByPk(id_event);
+            const event = await EventEntity.findByPk(id_event);
 
             if(!event)
                 return res.json(Status.NOT_FOUND);
 
-            const [ category ] = await Category.findOrCreate({
+            const [ category ] = await CategoryEntity.findOrCreate({
                 where: { name }
             });
-
-            console.log("alou");
 
             if(!category)
                 return res.json(Status.FAILED);
@@ -55,7 +54,7 @@ module.exports = {
         const { id, name } = req.body;
 
         try {
-            const category = await Category.findByPk(id);
+            const category = await CategoryEntity.findByPk(id);
 
             if(!category)
                 return res.json(Status.NOT_FOUND);
@@ -68,13 +67,11 @@ module.exports = {
             return res.json({ status: Status.FAILED, error: err });
         }
     },
-    // Deleta uma instituição
+    // Deleta uma categoria
     async deleteById(req, res){
-        const { id } = req.body;
+        const { id_category } = req.params;
 
         try {
-            if(await category.destroy({ where: { id } }) == 1)
-                return res.json(Status.SUCCESS);
             return res.json(Status.FAILED);
         } catch (err) {
             return res.json({ status: Status.FAILED, error: err });

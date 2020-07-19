@@ -13,7 +13,7 @@ module.exports = {
       },
       valor_pedido: Sequelize.DECIMAL,
       data_pedido: Sequelize.DATE,
-      observacao_cliente: Sequelize.STRING,
+      observacao_usuario: Sequelize.STRING,
       status_pedido: Sequelize.INTEGER,
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,

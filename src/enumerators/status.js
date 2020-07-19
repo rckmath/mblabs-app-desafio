@@ -1,10 +1,11 @@
 const Status = {
-    SUCCESS: 1,     // Em caso de sucesso
-    FAILED: 2,      // Em caso de falha
-    PENDING: 3,     // Pendente de aprovação ou requisição
-    NOT_FOUND: 4,   // Não encontrado
-    DUPLICATED: 5,  // Dado já existente
-    UNAUTHORIZED: 6 // Não autorizado
+    SUCCESS: 1,     // Sucesso
+    CANCELED: 2,    // Cancelado
+    PENDING: 3,     // Pendente
+    FAILED: 4,      // Falha
+    NOT_FOUND: 5,   // Não encontrado
+    DUPLICATED: 6,  // Duplicado
+    UNAUTHORIZED: 7 // Não autorizado
 };
 
 module.exports = Status;

@@ -5,7 +5,7 @@ class Event extends Model {
         super.init({
             id: { type: DataTypes.UUID, primaryKey: true, field: 'id_evento', defaultValue: DataTypes.UUIDV4, },
             name: { type: DataTypes.STRING, field: 'nome_evento', },
-            description: { type: DataTypes.STRING, field: 'descricao_evento', },
+            description: { type: DataTypes.STRING(1000), field: 'descricao_evento', },
             tickets_qty: { type: DataTypes.INTEGER, field: 'qtd_ingr_disponiveis', },
             ticket_val: { type: DataTypes.DECIMAL,  field: 'valor_ingresso', },
             event_date: { type: DataTypes.DATE, field: 'data_evento', },

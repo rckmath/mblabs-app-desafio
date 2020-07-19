@@ -3,7 +3,7 @@ const { Model, DataTypes } = require('sequelize');
 class Ticket extends Model {
     static init(sequelize) {
         super.init({
-            id: { type: DataTypes.UUID, primaryKey: true, field: 'id_ingresso', defaultValue: DataTypes.UUIDV4, },           
+            id: { type: DataTypes.UUID, primaryKey: true, field: 'id_ingresso', defaultValue: DataTypes.UUIDV4, },
         }, {
             sequelize,
             tableName: 'Ingresso',

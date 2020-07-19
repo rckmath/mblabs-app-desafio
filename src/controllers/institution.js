@@ -1,12 +1,14 @@
-const Institution = require ('../db/models/institution');
+const InstitutionEntity = require ('../db/models/institution');
 const Status = require('../enumerators/status');
+const Utils = require('../utilities/utils');
 
 module.exports = {
+    
     // Busca todas as instituições cadastradas
     async index(req, res) {
-        const institutions = await Institution.findAll({
+        const institutions = await InstitutionEntity.findAll({
             attributes: {
-                exclude: ['createdAt', 'updatedAt']
+                exclude: Utils.excludeAttributes
             }
         });
 
@@ -18,7 +20,7 @@ module.exports = {
 
         try {
             const institution_data = { name, cnpj };
-            const institution = await Institution.create(institution_data);
+            const institution = await InstitutionEntity.create(institution_data);
 
             if(!institution)
                 return res.json(Status.FAILED);
@@ -33,7 +35,7 @@ module.exports = {
         const { id, name } = req.body;
 
         try {
-            const institution = await Institution.findByPk(id);
+            const institution = await InstitutionEntity.findByPk(id);
 
             if(!institution)
                 return res.json(Status.NOT_FOUND);
@@ -51,7 +53,7 @@ module.exports = {
         const { id_institution } = req.params;
 
         try {
-            const institution = await Institution.findByPk(id_institution, {
+            const institution = await InstitutionEntity.findByPk(id_institution, {
                 include: {
                     association: 'events',
                 }
@@ -70,7 +72,7 @@ module.exports = {
                 });
             }
 
-            if(!await Institution.destroy({ where: { id: id_institution } }) == 1)
+            if(!await InstitutionEntity.destroy({ where: { id: id_institution } }) == 1)
                 return res.json(Status.FAILED);
 
             return res.json(Status.SUCCESS);

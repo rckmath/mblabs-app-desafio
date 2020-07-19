@@ -1,17 +1,19 @@
-const User = require ('../db/models/user');
+const UserEntity = require ('../db/models/user');
+const AddressController = require('../controllers/address');
 const Status = require('../enumerators/status');
 const bcrypt = require('bcrypt');
+const Utils = require('../utilities/utils');
 
 module.exports = {
     // Busca todos os usuários cadastrados
     async index(req, res) {
-        const users = await User.findAll({
+        const users = await UserEntity.findAll({
             include: {
                 association: 'addresses',
                 attributes: ['zipcode', 'num'],
             },
             attributes: {
-                exclude: ['createdAt', 'updateAt', 'password']
+                exclude: [].concat(Utils.excludeAttributes, 'password')
             }
         });
 
@@ -20,12 +22,12 @@ module.exports = {
     // Cadastra um novo usuário no banco de dados
     async create(req, res) {
         const { name, cpf, birthday, email, password, type } = req.body;
-
+        
         /**
          * Verifica se usuário já está cadastrado
          */
         try {
-            exists = await User.findOne({ 
+            exists = await UserEntity.findOne({ 
                 where: { email },
             });
             
@@ -35,9 +37,7 @@ module.exports = {
             return res.json({ status: Status.FAILED, error: err });
         }
 
-        /**
-         * Criação do usuário
-         */
+        // Criação do usuário
         try {
             /**
              * Gera hash de senha usando bCrypt
@@ -48,9 +48,7 @@ module.exports = {
                     res.json(Status.FAILED);
 
                 const user_data = { name, cpf, birthday, email, password: hash, type };
-                console.log(user_data);
-
-                const user = User.create(user_data);
+                const user = UserEntity.create(user_data);
 
                 if(!user)
                     return res.json(Status.FAILED);
@@ -60,4 +58,34 @@ module.exports = {
             return res.json({ status: Status.FAILED, error: err });
         }
     },
+    async deleteById(req, res) {
+        const { id_user } = req.params;
+
+        try {
+            user = await UserEntity.findByPk(id_user, {
+                include: {
+                    association: 'addresses',
+                },
+            });
+
+            if(!user)
+                return res.json(Status.NOT_FOUND);
+
+            /**
+             * Remove os endereços desse usuário
+             */
+            if(user.addresses){
+                await user.addresses.forEach(address => {
+                    address.destroy();
+                });
+            }
+
+            if(await user.destroy())
+                return res.json(Status.SUCCESS);
+
+            return res.json(Status.FAILED);
+        } catch (err) {
+            return res.json({ status: Status.FAILED, error: err });
+        }
+    }
 };

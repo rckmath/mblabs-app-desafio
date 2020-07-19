@@ -4,7 +4,8 @@ const AddressController = require('./controllers/address');
 const InstitutionController = require('./controllers/institution');
 const EventController = require('./controllers/event');
 const CategoryController = require('./controllers/category');
-
+const OrderController = require('./controllers/order');
+const OrderItemController = require('./controllers/orderitem');
 
 const routes = express.Router();
 
@@ -17,6 +18,7 @@ routes.post('/users/:id_user/addresses', AddressController.create);
 routes.put('/users/:id_user/adresses/:id_address', AddressController.update);
 routes.get('/users/:id_user/addresses', AddressController.index);
 routes.delete('/users/:id_user/addresses/:id_address', AddressController.deleteById);
+routes.delete('/users/:id_user', UserController.deleteById);
 
 /**
  * Rotas pertencentes a instituição
@@ -38,12 +40,18 @@ routes.put('/institutions/:id_institution/events/:id_event', EventController.upd
 routes.delete('/institutions/:id_institution/events/:id_event', EventController.deleteById);
 
 /**
- * Rotas pertencens a categoria
+ * Rotas pertencentes a categoria
  */
 routes.get('/institutions/events/category', CategoryController.index);
 routes.post('/institutions/events/category', CategoryController.create);
 
-
+/**
+ * Rotas pertencentes ao pedido
+ */
+routes.get('/users/orders', OrderController.index);
+routes.get('/users/orders/:id_order', OrderItemController.index);
+routes.post('/users/:id_user/orders', OrderController.create);
+routes.post('/users/:id_user/orders/:id_order', OrderItemController.create);
 
 // Exportando rotas
 module.exports = routes;

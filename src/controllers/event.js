@@ -1,16 +1,17 @@
-const Event = require ('../db/models/event');
-const Institution = require ('../db/models/institution');
-const Category = require ('../db/models/category');
+const EventEntity = require ('../db/models/event');
+const InstitutionEntity = require ('../db/models/institution');
+const CategoryEntity = require ('../db/models/category');
 const Status = require('../enumerators/status');
+const Utils = require('../utilities/utils');
 
 module.exports = {
     // Busca todos os eventos e retorna os disponiveis (que não ocorreram ainda)
     async index(req, res) {
         try {
             const systemDate = new Date();
-            const events = await Event.findAll({
+            const events = await EventEntity.findAll({
                 attributes: {
-                    exclude: ['id', 'id_instituicao', 'createdAt', 'updatedAt']
+                    exclude: Utils.excludeAttributes
                 },
                 include: {
                     association: 'categories',
@@ -21,7 +22,7 @@ module.exports = {
                 }
             });
 
-            var availableEvents = [];
+            let availableEvents = [];
 
             events.forEach(event => {
                 if(event.event_date > systemDate)
@@ -37,12 +38,15 @@ module.exports = {
     async indexByInstitution(req, res){
         const { id_institution } = req.params;
         try {
-             const events = await Event.findAll({
-                 where: { id_instituicao: id_institution },
-                 attributes: {
-                     exclude: ['id', 'id_instituicao', 'createdAt', 'updatedAt']
-                 }
-             });
+            const events = await EventEntity.findAll({
+                where: { id_instituicao: id_institution },
+                attributes: {
+                    exclude: 'id_instituicao' + Utils.excludeAttributes
+                }
+            });
+
+            if(!events)
+                return res.json(Status.NOT_FOUND);
 
              return res.json(events);
         } catch (err) {
@@ -57,11 +61,11 @@ module.exports = {
         const id = id_institution;
 
         try {
-            const institution = await Institution.findByPk(id);
+            const institution = await InstitutionEntity.findByPk(id);
             if(!institution)
                 return res.json(Status.NOT_FOUND);
 
-            const [ category ] = await Category.findOrCreate({
+            const [ category ] = await CategoryEntity.findOrCreate({
                 where: { name: category_name }
             });
 
@@ -69,7 +73,7 @@ module.exports = {
                 return res.json(Status.FAILED);
 
             const event_data = { name, description, tickets_qty, ticket_val, event_date, event_time, zipcode, num, id_instituicao: id_institution };
-            const event = await Event.create(event_data);
+            const event = await EventEntity.create(event_data);
 
             if(!event)
                 return res.json(Status.FAILED);
@@ -87,7 +91,7 @@ module.exports = {
         const { name, description, tickets_qty, ticket_val, event_date, event_time, zipcode, num } = req.body;
 
         try {
-            const event = await Event.findByPk(id_event);
+            const event = await EventEntity.findByPk(id_event);
             if(!event)
                 return res.json(Status.NOT_FOUND);
 
@@ -105,7 +109,7 @@ module.exports = {
     async deleteById(req, res){
         const { id_event } = req.params;
         try {
-            const event = await Event.findByPk(id_event, {
+            const event = await EventEntity.findByPk(id_event, {
                 include: {
                     association: 'categories'
                 }
@@ -123,9 +127,9 @@ module.exports = {
                 });
             }
 
-            if(await Event.destroy({ where: { id: id_event } }) == 1)
+            if(await EventEntity.destroy({ where: { id: id_event } }) == 1)
                 return res.json(Status.SUCCESS);
-            
+                
             return res.json(Status.FAILED);
         } catch (err) {
             return res.json({ status: Status.FAILED, error: err });
