@@ -56,6 +56,10 @@ module.exports = {
     // Cadastra um novo evento no banco de dados
     async create(req, res) {
         const { id_institution } = req.params;
+
+        if(Utils.bodyVerify(req) === 1)
+            return res.json(Status.CANCELED);
+
         const { name, description, category_name, tickets_qty, ticket_val, event_date, event_time, zipcode, num } = req.body;
 
         const id = id_institution;
@@ -88,6 +92,10 @@ module.exports = {
     // Atualiza os dados do evento
     async updateById(req, res) {
         const { id_event } = req.params;
+
+        if(Utils.bodyVerify(req) === 1)
+            return res.json(Status.CANCELED);
+
         const { name, description, tickets_qty, ticket_val, event_date, event_time, zipcode, num } = req.body;
 
         try {

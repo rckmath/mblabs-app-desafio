@@ -13,10 +13,11 @@ const routes = express.Router();
  * Rotas pertencentes ao usuário
  */
 routes.get('/users', UserController.index);
+routes.get('/users/:id_user/addresses', AddressController.index);
 routes.post('/users', UserController.create);
 routes.post('/users/:id_user/addresses', AddressController.create);
-routes.put('/users/:id_user/adresses/:id_address', AddressController.update);
-routes.get('/users/:id_user/addresses', AddressController.index);
+routes.put('/users/:id_user/adresses/:id_address', AddressController.updateById);
+routes.put('/users/:id_user', UserController.updateById);
 routes.delete('/users/:id_user/addresses/:id_address', AddressController.deleteById);
 routes.delete('/users/:id_user', UserController.deleteById);
 
@@ -49,9 +50,10 @@ routes.post('/institutions/events/category', CategoryController.create);
  * Rotas pertencentes ao pedido
  */
 routes.get('/users/orders', OrderController.index);
-routes.get('/users/orders/:id_order', OrderItemController.index);
+routes.get('/users/orders/:id_order/items', OrderItemController.index);
 routes.post('/users/:id_user/orders', OrderController.create);
 routes.post('/users/:id_user/orders/:id_order', OrderItemController.create);
+routes.delete('/users/:id_user/orders/:id_order/items/:id_item', OrderItemController.deleteById);
 
 // Exportando rotas
 module.exports = routes;

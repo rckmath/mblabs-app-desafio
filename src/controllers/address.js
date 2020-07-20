@@ -26,6 +26,10 @@ module.exports = {
     // Cadastra um novo endereço no banco de dados
     async create(req, res) {
         const { id_user } = req.params;
+
+        if(Utils.bodyVerify(req) === 1)
+            return res.json(Status.CANCELED);
+
         const { zipcode, num } = req.body;
 
         try {
@@ -46,8 +50,12 @@ module.exports = {
             return res.json({ status: Status.FAILED, error: err });
         }
     },
-    async update(req, res) {
+    async updateById(req, res) {
         const { id_user, id_address } = req.params;
+
+        if(Utils.bodyVerify(req) === 1)
+            return res.json(Status.CANCELED);
+
         const { zipcode, num } = req.body;
 
         try {

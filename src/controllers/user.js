@@ -21,6 +21,9 @@ module.exports = {
     },
     // Cadastra um novo usuário no banco de dados
     async create(req, res) {
+        if(Utils.bodyVerify(req) === 1)
+            return res.json(Status.CANCELED);
+
         const { name, cpf, birthday, email, password, type } = req.body;
         
         /**
@@ -58,6 +61,31 @@ module.exports = {
             return res.json({ status: Status.FAILED, error: err });
         }
     },
+    // Atualiza data de nascimento de um usuário
+    async updateById(req, res){
+        const { id_user } = req.params;
+
+        if(Utils.bodyVerify(req) === 1)
+            return res.json(Status.CANCELED);
+
+        const { birthday } = req.body;
+        
+        try {
+            const user = await UserEntity.findByPk(id_user);
+
+            if(!user)
+                return res.json(Status.NOT_FOUND);
+
+            user.birthday = birthday;
+            user.save();
+                
+            return res.json(Status.SUCCESS);
+        } catch (err) {
+            return res.json({ status: Status.FAILED, error: err });
+        }
+
+    },
+    // Delete um usúario
     async deleteById(req, res) {
         const { id_user } = req.params;
 

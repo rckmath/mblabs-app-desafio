@@ -31,6 +31,10 @@ module.exports = {
     // Cadastra um novo pedido no banco de dados
     async create(req, res) {
         const { id_user } = req.params;
+
+        if(Utils.bodyVerify(req) === 1)
+            return res.json(Status.CANCELED);
+            
         const { order_date, user_note, event_name, item_qty } = req.body;
 
         try {
@@ -67,6 +71,10 @@ module.exports = {
     // Atualiza os dados do pedido
     async updateById(req, res) {
         const { id_event } = req.params;
+
+        if(Utils.bodyVerify(req) === 1)
+            return res.json(Status.CANCELED);
+
         const { name, description, tickets_qty, ticket_val, event_date, event_time, zipcode, num } = req.body;
 
         try {

@@ -16,6 +16,9 @@ module.exports = {
     },
     // Cadastra uma nova instituição no banco de dados
     async create(req, res) {
+        if(Utils.bodyVerify(req) === 1)
+            return res.json(Status.CANCELED);
+
         const { name, cnpj } = req.body;
 
         try {
@@ -32,6 +35,9 @@ module.exports = {
     },
     // Atualiza o nome da instituição
     async updateById(req, res) {
+        if(Utils.bodyVerify(req) === 1)
+            return res.json(Status.CANCELED);
+
         const { id, name } = req.body;
 
         try {

@@ -26,6 +26,10 @@ module.exports = {
     // Relaciona uma categoria a um evento
     async create(req, res) {
         const { id_event } = req.params;
+
+        if(Utils.bodyVerify(req) === 1)
+            return res.json(Status.CANCELED);
+
         const { name } = req.body;
 
         try {
