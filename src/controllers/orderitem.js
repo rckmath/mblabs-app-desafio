@@ -73,7 +73,17 @@ module.exports = {
             const orderitem_data = { item_qty, total_value, id_pedido: id_order, id_evento: event.id };
             const orderitem = await OrderItemEntity.create(orderitem_data);
 
-            return (!orderitem ? res.json(Status.FAILED) : res.json(Status.SUCCESS));
+            if(!orderitem)
+                res.json(Status.FAILED);
+
+            try {
+                user.orders[0].order_val = (user.orders[0].order_val * 1.0)  + total_value;
+                user.orders[0].save();
+            } catch (err){
+                return res.json(err)
+            }
+
+            res.json(Status.SUCCESS);
 
         } catch (err) {
             return res.json({ status: Status.FAILED, error: err });

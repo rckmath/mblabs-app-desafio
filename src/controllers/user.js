@@ -1,44 +1,32 @@
 const UserEntity = require ('../db/models/user');
-const AddressController = require('../controllers/address');
 const Status = require('../enumerators/status');
 const bcrypt = require('bcrypt');
 const Utils = require('../utilities/utils');
+const UserRepository = require('../db/repositories/user');
+const EmailUseCheck = require('../middlewares/email-use-check');
 
 module.exports = {
-    // Busca todos os usuários cadastrados
+    // Retorna todos os usuários cadastrados
     async index(req, res) {
-        const users = await UserEntity.findAll({
-            include: {
-                association: 'addresses',
-                attributes: ['zipcode', 'num'],
-            },
-            attributes: {
-                exclude: [].concat(Utils.excludeAttributes, 'password')
-            }
-        });
-
-        return res.json(users);
+        const include = {
+            association: 'addresses',
+            attributes: ['zipcode', 'num'],
+        };
+        
+        const users = await UserRepository.selectAll({ include });
+        
+        return (!users ? res.json(Status.FAILED) : res.json(users));
     },
     // Cadastra um novo usuário no banco de dados
     async create(req, res) {
+        
         if(Utils.bodyVerify(req) === 1)
             return res.json(Status.CANCELED);
 
         const { name, cpf, birthday, email, password, type } = req.body;
-        
-        /**
-         * Verifica se usuário já está cadastrado
-         */
-        try {
-            exists = await UserEntity.findOne({ 
-                where: { email },
-            });
-            
-            if(exists)
-                return res.json (Status.DUPLICATED);
-        } catch (err) {
-            return res.json({ status: Status.FAILED, error: err });
-        }
+
+        if(await EmailUseCheck(email) == Status.DUPLICATED)
+            return res.json(Status.DUPLICATED);
 
         // Criação do usuário
         try {
@@ -48,18 +36,18 @@ module.exports = {
             const saltRounds = 10;
             await bcrypt.hash(password, saltRounds, function(err, hash) {
                 if(err)
-                    res.json(Status.FAILED);
+                    return res.json(Status.FAILED);
 
                 const user_data = { name, cpf, birthday, email, password: hash, type };
-                const user = UserEntity.create(user_data);
+                const user = UserRepository.create(user_data);
 
                 if(!user)
                     return res.json(Status.FAILED);
-                return res.json(Status.SUCCESS);
             });
         } catch (err) {
             return res.json({ status: Status.FAILED, error: err });
         }
+        return res.json(Status.SUCCESS);
     },
     // Atualiza data de nascimento de um usuário
     async updateById(req, res){
