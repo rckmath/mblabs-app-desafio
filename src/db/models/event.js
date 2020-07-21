@@ -32,10 +32,6 @@ class Event extends Model {
             through: 'EventoCategoria',
             as: 'categories'
         });
-        this.hasMany(models.Ticket, {
-            foreignKey: 'id_evento',
-            as: 'items'
-        });
     }
 }
 

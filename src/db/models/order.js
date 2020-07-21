@@ -23,10 +23,6 @@ class Order extends Model {
             foreignKey: 'id_pedido',
             as: 'items'
         });
-        this.hasMany(models.Ticket, {
-            foreignKey: 'id_pedido',
-            as: 'tickets'
-        });
         this.belongsTo(models.User, {
             foreignKey: 'id_usuario',
             as: 'user'

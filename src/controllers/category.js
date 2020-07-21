@@ -1,12 +1,13 @@
 const CategoryEntity = require ('../db/models/category');
 const EventEntity = require ('../db/models/event');
+const ModelRepository = require('../db/repositories/models');
 const Status = require('../enumerators/status');
 const Utils = require('../utilities/utils');
 
 module.exports = {
-    // Retorna todas as categorias e os eventos relacionados a elas.
+    // Retorna todas as categorias e os eventos relacionados a elas
     async index(req, res) {
-        const categories = await CategoryEntity.findAll({
+        const options = {
             include: {
                 association: 'events',
                 attributes: {
@@ -16,24 +17,39 @@ module.exports = {
                     attributes: []
                 } 
             },
-            attributes: {
-                exclude: 'id' + Utils.excludeAttributes,
-            }
-        });
+        };
 
-        return res.json(categories);
+        return res.json(await ModelRepository.selectAll(CategoryEntity, options));
+    },
+    // Retorna os eventos de uma determinada categoria
+    async indexByCategory(req, res) {
+        const { id_category } = req.params;
+
+        const options = {
+            where: { id: id_category },
+            include: {
+                association: 'events',
+                attributes: {
+                    exclude: Utils.excludeAttributes,
+                },
+                through: { attributes: [] } 
+            }
+        };
+
+        return res.json(await ModelRepository.selectAll(CategoryEntity, options));
     },
     // Relaciona uma categoria a um evento
     async create(req, res) {
-        const { id_event } = req.params;
-
         if(Utils.bodyVerify(req) === 1)
             return res.json(Status.CANCELED);
 
+        const { id_event } = req.params;
         const { name } = req.body;
+        const where = { id: id_event };
 
+        let event;
         try {
-            const event = await EventEntity.findByPk(id_event);
+            event = await ModelRepository.selectOne(EventEntity, { where });
 
             if(!event)
                 return res.json(Status.NOT_FOUND);
@@ -45,38 +61,49 @@ module.exports = {
             if(!category)
                 return res.json(Status.FAILED);
 
-            await event.addCategory(category);
-              
-            return res.json(Status.SUCCESS);
+            await event.addCategory(category);   
         } catch (err) {
             return res.json({ status: Status.FAILED, error: err });
         }
+        return res.json(Status.SUCCESS);
     },
     
     // Atualiza o nome da categoria
     async updateById(req, res) {
-        const { id, name } = req.body;
+        if(Utils.bodyVerify(req) === 1)
+            return res.json(Status.CANCELED);
+        
+        const { id_category } = req.params;
+        const { name } = req.body;
 
-        try {
-            const category = await CategoryEntity.findByPk(id);
-
-            if(!category)
-                return res.json(Status.NOT_FOUND);
-
-            category.name = name;
-            await category.save();
-
-            return res.json(Status.SUCCESS);
-        } catch (err) {
-            return res.json({ status: Status.FAILED, error: err });
-        }
+        return (!await ModelRepository.updateById(CategoryEntity, id_category, { name }) ? res.json(Status.FAILED) : res.json(Status.SUCCESS));
     },
     // Deleta uma categoria
     async deleteById(req, res){
         const { id_category } = req.params;
 
+        const options = {
+            where: { id: id_category },
+            include: {
+                association: 'events'
+            }
+        };
+        let category;
+
         try {
-            return res.json(Status.FAILED);
+            category = await ModelRepository.selectOne(CategoryEntity, options);
+
+            if(!category)
+                return res.json(Status.NOT_FOUND);
+
+            // Remove a relação entre esta categoria e os eventos com que ela se relacionava
+            if(category.events){
+                await category.events.forEach(event => {
+                    category.removeEvent(event);
+                });
+            }
+
+            return (!await category.destroy() ? res.json(Status.FAILED) : res.json(Status.SUCCESS));
         } catch (err) {
             return res.json({ status: Status.FAILED, error: err });
         }

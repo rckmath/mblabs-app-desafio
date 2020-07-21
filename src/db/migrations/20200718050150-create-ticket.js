@@ -7,14 +7,15 @@ module.exports = {
         type: Sequelize.UUID,
         primaryKey: true,
       },
-      id_pedido: {
+      id_item_pedido: {
         type: Sequelize.UUID,
-        references: { model: 'Pedido', key: 'id_pedido' },
+        references: { model: 'ItemPedido', key: 'id_item_pedido' },
       },
       id_usuario: {
         type: Sequelize.UUID,
         references: { model: 'Usuario', key: 'id_usuario' },
       },
+      usado_em: Sequelize.DATE,
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
     });

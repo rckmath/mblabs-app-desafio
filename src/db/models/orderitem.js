@@ -25,6 +25,10 @@ class OrderItem extends Model {
             foreignKey: 'id_evento',
             as: 'event'
         });
+        this.hasMany(models.Ticket, {
+            foreignKey: 'id_item_pedido',
+            as: 'tickets'
+        });
     }
 }
 
