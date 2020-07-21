@@ -3,7 +3,6 @@ const Status = require('../enumerators/status');
 const bcrypt = require('bcrypt');
 const Utils = require('../utilities/utils');
 const ModelRepository = require('../db/repositories/models');
-const moment = require('moment-timezone');
 
 module.exports = {
     // Retorna todos os usuários cadastrados

@@ -1,5 +1,9 @@
 require('./db/index');
+require('dotenv').config();
 
+var cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const Constants = require('./utilities/constants');
 const express = require('express');
 const routes = require('./routes');
 
@@ -11,6 +15,9 @@ app.use(express.json());
 
 // Iniciando rotas
 app.use(routes);
+app.use(cookieParser());
 
-// Escutando a porta 1335
-app.listen(1335);
+// Escutando a porta
+app.listen(Constants.port);
+
+module.exports = app;
