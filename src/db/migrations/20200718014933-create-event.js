@@ -7,8 +7,12 @@ module.exports = {
         type: Sequelize.UUID,
         primaryKey: true,
       },
+      id_instituicao: {
+        type: Sequelize.UUID,
+        references: { model: 'Instituicao', key: 'id_instituicao' },
+      },
       nome_evento: Sequelize.STRING,
-      descricao_evento: Sequelize.STRING,
+      descricao_evento: Sequelize.STRING(1000),
       qtd_ingr_disponiveis: Sequelize.INTEGER,
       valor_ingresso: Sequelize.DECIMAL,
       data_evento: Sequelize.DATE,

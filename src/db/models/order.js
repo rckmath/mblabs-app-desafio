@@ -7,7 +7,7 @@ class Order extends Model {
             order_val: { type: DataTypes.DECIMAL, field: 'valor_pedido', },
             order_date: { type: DataTypes.DATE, field: 'data_pedido', },
             user_note: { type: DataTypes.STRING, field: 'observacao_usuario', },
-            order_status: { type: DataTypes.INTEGER, field: 'status_pedido', },            
+            order_status: { type: DataTypes.INTEGER, field: 'status_pedido', },
         }, {
             sequelize,
             tableName: 'Pedido',
@@ -22,10 +22,6 @@ class Order extends Model {
         this.hasMany(models.OrderItem, {
             foreignKey: 'id_pedido',
             as: 'items'
-        });
-        this.hasMany(models.Ticket, {
-            foreignKey: 'id_pedido',
-            as: 'tickets'
         });
         this.belongsTo(models.User, {
             foreignKey: 'id_usuario',

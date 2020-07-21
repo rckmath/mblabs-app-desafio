@@ -1,7 +1,7 @@
 const ProfileType = {
-  ADMIN: 1, // Super admin (can fully manipulate the system)
-  MANAGER: 2, // Admin manager (can create, update, read and delete events)
-  USER: 3, // Generic
+    ADMIN: 1, // Super admin (pode manipular todo o sistema)
+    MANAGER: 2, // Admin manager (pode manipular certas infos do banco de dados)
+    USER: 3, // Genérico, usuário padrão
 };
 
-export default ProfileType;
+module.exports = ProfileType;
