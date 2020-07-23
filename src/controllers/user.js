@@ -1,6 +1,7 @@
 const UserEntity = require ('../db/models/user');
 const Status = require('../enumerators/status');
 const bcrypt = require('bcrypt');
+const httpStatus = require('http-status');
 const Utils = require('../utilities/utils');
 const ModelRepository = require('../db/repositories/models');
 
@@ -21,8 +22,8 @@ module.exports = {
 
         const { name, cpf, birthday, email, password, type } = req.body;
 
-        if(await Utils.emailAlreadyInUse(email) == Status.DUPLICATED)
-            return res.json(Status.DUPLICATED);
+        if(await Utils.emailAlreadyInUse(email))
+            return res.status(httpStatus.CONFLICT).json();
 
         // Gera hash de senha usando bCrypt
         const saltRounds = 10;
@@ -32,12 +33,15 @@ module.exports = {
 
             const user_data = { name, cpf, birthday, email, password: hash, type };
 
-            return (!ModelRepository.create(UserEntity, user_data) ? res.json(Status.FAILED) : res.json(Status.SUCCESS));
+            return (!ModelRepository.create(UserEntity, user_data) ? res.status(httpStatus.FORBIDDEN).json(Status.FAILED) : res.status(httpStatus.OK).json(Status.SUCCESS));
         });
     },
     // Atualiza data de nascimento de um usuário
     async updateById(req, res){
         const { id_user } = req.params;
+
+        if(id_user != req.payload.id)
+            return res.status(httpStatus.UNAUTHORIZED).json({ message: 'ID de usuário não coincide' });
 
         if(Utils.bodyVerify(req) === 1)
             return res.json(Status.CANCELED);

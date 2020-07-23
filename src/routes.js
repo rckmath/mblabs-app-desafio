@@ -8,6 +8,7 @@ const OrderController = require('./controllers/order');
 const OrderItemController = require('./controllers/orderitem');
 const TicketController = require('./controllers/ticket');
 const { verifyToken } = AuthController = require('./controllers/auth');
+const Utils = require('./utilities/utils');
 
 const routes = express.Router();
 
@@ -15,15 +16,15 @@ const routes = express.Router();
  * Rotas pertencentes ao usuário
  */
 routes.get('/users', verifyToken, UserController.index);
-routes.get('/users/:id_user/addresses', AddressController.index);
-routes.get('/users/:id_user/tickets', TicketController.index);
-routes.get('/users/:id_user/orders', OrderController.indexByUser);
+routes.get('/users/:id_user/addresses', verifyToken, AddressController.index);
+routes.get('/users/:id_user/tickets', verifyToken, TicketController.index);
+routes.get('/users/:id_user/orders', verifyToken, OrderController.indexByUser);
 routes.post('/users', UserController.create);
-routes.post('/users/:id_user/addresses', AddressController.create);
-routes.put('/users/:id_user/addresses/:id_address', AddressController.updateById);
-routes.put('/users/:id_user', UserController.updateById);
-routes.delete('/users/:id_user/addresses/:id_address', AddressController.deleteById);
-routes.delete('/users/:id_user', UserController.deleteById);
+routes.post('/users/:id_user/addresses', verifyToken, AddressController.create);
+routes.put('/users/:id_user/addresses/:id_address', verifyToken, AddressController.updateById);
+routes.put('/users/:id_user', verifyToken, UserController.updateById);
+routes.delete('/users/:id_user/addresses/:id_address', verifyToken, AddressController.deleteById);
+routes.delete('/users/:id_user', verifyToken, UserController.deleteById);
 
 /**
  * Rotas pertencentes a instituição
@@ -72,10 +73,11 @@ routes.post('/users/:id_user/orders/:id_order/items/:id_item/tickets', TicketCon
 routes.put('/users/:id_user/tickets/:id_ticket', TicketController.updateById);
 
 /**
- * Rotas de login, logout e cadastro
+ * Outras
  */
 routes.post('/login', AuthController.login);
 routes.post('/logout', AuthController.logout);
+routes.get('/cep', Utils.getAddress);
 
 // Exportando rotas
 module.exports = routes;
