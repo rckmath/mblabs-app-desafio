@@ -19,7 +19,7 @@ module.exports = {
                 association: 'categories',
                 attributes: ['id', 'name'],
                 through: { attributes: [] },
-            }
+            },
         }
 
         return res.json(await ModelRepository.selectAll(EventEntity, options));
