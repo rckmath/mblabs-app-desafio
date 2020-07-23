@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ImageBackground, Image, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
+import { AppLoading } from 'expo';
 import { useNavigation } from '@react-navigation/native'
 import Constants from 'expo-constants';
 
@@ -13,8 +14,13 @@ const Home = () => {
 
     useEffect(() => {
         function getEvents(){
-            api.get('/institutions/events').then(res => {
+            api.get('/institutions/events')
+            .then(res => {
+                console.log(res.data);
                 setEvents(res.data);
+            })
+            .catch(err => {
+                console.log(err);
             });
         }
         getEvents();
@@ -25,6 +31,10 @@ const Home = () => {
             event
         });
     }
+
+    // Não exibe os elementos em tela enquanto não receber a instituição e o endereço da API
+    if(!events)
+        return <AppLoading/>
 
     return( 
         <ImageBackground
@@ -41,7 +51,7 @@ const Home = () => {
                             showsVerticalScrollIndicator={ false }
                             contentContainerStyle={{ paddingVertical: 16 }}
                         >
-                            {events.map(event => (
+                            { events == undefined && (events.map(event => (
                                 <View style={ styles.event } key={ String(event.id) }>
                                     <TouchableOpacity onPress={ () => { handleNavigationToEventDetails(event) } }>
                                         <Text style={ styles.event_title }>{ event.name }</Text>
@@ -65,7 +75,7 @@ const Home = () => {
                                             <Text style={ styles.price_text }> { event.ticket_val > 0 ? 'R$ ' + event.ticket_val : 'Gratuito' } </Text>
                                         </View>
                                     </TouchableOpacity>
-                                </View>
+                                </View>)
                             ))}
                         </ScrollView>
                     </SafeAreaView> 
