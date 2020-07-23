@@ -1,6 +1,6 @@
-# The project
+# SwiftEventos
 
-An event management app build up with React Native & Node.js which purpose is to be used by users who wants to seek events promoted by institutions and buy tickets for them.
+An WIP event management app build up with React Native & Node.js which purpose is to be used by users who wants to seek events promoted by institutions and buy tickets for them.
 
 This app was developed for an intership at MB Labs.
 
@@ -8,7 +8,9 @@ This app was developed for an intership at MB Labs.
 
 - Users can seek for events and buy tickets for them;
 - Users can pay for the events tickets through credit card, money and bank slip;
-- Institutions can create events and it's details;
+- Users can follow institutions and be notified by the app before an event of them occurs.
+
+![App preview](https://i.imgur.com/ZAJfSPq.png)
 
 # Used technologies and development environment
 
@@ -18,13 +20,16 @@ This app was developed for an intership at MB Labs.
 :star: Sequelize\
 :star: Redux\
 :star: PostgreSQL\
+:star: Postman\
 :star: Yarn\
+:star: pgAdmin\
 :star: Visual Studio Code\
+:star: Trello\
 :star: Photoshop\
-:star: Spotify\
+:star: Spotify
 
 # Special thanks to
 
-[Rockeseat](https://rocketseat.com.br/)
-[MB Labs](http://www.mblabs.com.br/)
-[Marcos A. Jr. Vasconcellos](https://github.com/MarcosJr1)
+**[Rockeseat](https://rocketseat.com.br/)**\
+**[MB Labs](http://www.mblabs.com.br/)**\
+**[Marcos A. Jr. Vasconcellos](https://github.com/MarcosJr1)**
