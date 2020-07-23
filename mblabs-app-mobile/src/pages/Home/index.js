@@ -51,7 +51,7 @@ const Home = () => {
                             showsVerticalScrollIndicator={ false }
                             contentContainerStyle={{ paddingVertical: 16 }}
                         >
-                            { events == undefined && (events.map(event => (
+                            { events != undefined && (events.map(event => (
                                 <View style={ styles.event } key={ String(event.id) }>
                                     <TouchableOpacity onPress={ () => { handleNavigationToEventDetails(event) } }>
                                         <Text style={ styles.event_title }>{ event.name }</Text>
