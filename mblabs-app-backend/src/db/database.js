@@ -1,9 +1,11 @@
+const Constants = require('../utilities/constants');
+
 module.exports = {
     dialect: 'postgres',
-    host: 'localhost',
-    username: 'postgres',
-    password: '@p4ssdb.',
-    database: 'swift-events',
+    host: Constants.database.host,
+    username: Constants.database.username,
+    password: Constants.database.password,
+    database: Constants.database.name,
     define: {
         timestamps: true,
         underscored: true,

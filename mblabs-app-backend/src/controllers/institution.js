@@ -8,6 +8,11 @@ module.exports = {
     
     // Busca todas as instituições cadastradas
     async index(req, res) {
+        if(req.query.id_institution){
+            const where = { id: req.query.id_institution };
+            return res.json(await ModelRepository.selectOne(InstitutionEntity, { where }))
+        }
+
         return res.json(await ModelRepository.selectAll(InstitutionEntity));
     },
     // Busca todos os eventos de uma instituição
