@@ -16,15 +16,15 @@ const routes = express.Router();
  * Rotas pertencentes ao usuário
  */
 routes.get('/users', verifyToken, UserController.index);
-routes.get('/users/:id_user/addresses', verifyToken, AddressController.index);
-routes.get('/users/:id_user/tickets', verifyToken, TicketController.index);
-routes.get('/users/:id_user/orders', verifyToken, OrderController.indexByUser);
+routes.get('/users/:id_user/addresses', AddressController.index);
+routes.get('/users/:id_user/tickets', TicketController.index);
+routes.get('/users/:id_user/orders', OrderController.indexByUser);
 routes.post('/users', UserController.create);
-routes.post('/users/:id_user/addresses', verifyToken, AddressController.create);
-routes.put('/users/:id_user/addresses/:id_address', verifyToken, AddressController.updateById);
-routes.put('/users/:id_user', verifyToken, UserController.updateById);
-routes.delete('/users/:id_user/addresses/:id_address', verifyToken, AddressController.deleteById);
-routes.delete('/users/:id_user', verifyToken, UserController.deleteById);
+routes.post('/users/:id_user/addresses', AddressController.create);
+routes.put('/users/:id_user/addresses/:id_address', AddressController.updateById);
+routes.put('/users/:id_user', UserController.updateById);
+routes.delete('/users/:id_user/addresses/:id_address', AddressController.deleteById);
+routes.delete('/users/:id_user', UserController.deleteById);
 
 /**
  * Rotas pertencentes a instituição
@@ -34,7 +34,6 @@ routes.get('/institutions/:id_institution/events', InstitutionController.indexEv
 routes.post('/institutions', InstitutionController.create);
 routes.put('/institutions/:id_institution', InstitutionController.updateById);
 routes.delete('/institutions/:id_institution', InstitutionController.deleteById);
-
 
 /**
  * Rotas pertencentes ao evento

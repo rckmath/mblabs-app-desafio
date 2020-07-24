@@ -16,7 +16,6 @@ const Home = () => {
         function getEvents(){
             api.get('/institutions/events')
             .then(res => {
-                console.log(res.data);
                 setEvents(res.data);
             })
             .catch(err => {

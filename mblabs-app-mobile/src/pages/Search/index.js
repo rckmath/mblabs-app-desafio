@@ -68,7 +68,7 @@ const Search = () => {
                                         <Text style={ styles.info_text }>{ event.description }</Text>
                                     </View>
                                     <View style={ styles.bottom_info_container }>
-                                        <Text style={ styles.price_text }> { 'R$' + event.ticket_val } </Text>
+                                    <Text style={ styles.price_text }> { event.ticket_val > 0 ? 'R$ ' + event.ticket_val : 'Gratuito' } </Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>

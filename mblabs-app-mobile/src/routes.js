@@ -84,7 +84,8 @@ const Tab = createMaterialBottomTabNavigator();
 
 function AppBottomTabStack() {
     return (
-        <Tab.Navigator screenOptions={({ route }) => ({
+        <Tab.Navigator
+        screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
 

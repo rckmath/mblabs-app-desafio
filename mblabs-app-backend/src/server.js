@@ -2,7 +2,6 @@ require('./db/index');
 require('dotenv').config();
 
 var cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const Constants = require('./utilities/constants');
 const express = require('express');
 const routes = require('./routes');
