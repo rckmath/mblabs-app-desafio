@@ -65,7 +65,7 @@ const Search = () => {
                                         ))}
                                     </View>
                                     <View style={ styles.info_container }>
-                                        <Text style={ styles.info_text }>{ event.description }</Text>
+                                        <Text numberOfLines={2} style={ styles.info_text }>{ event.description }</Text>
                                     </View>
                                     <View style={ styles.bottom_info_container }>
                                     <Text style={ styles.price_text }> { event.ticket_val > 0 ? 'R$ ' + event.ticket_val : 'Gratuito' } </Text>

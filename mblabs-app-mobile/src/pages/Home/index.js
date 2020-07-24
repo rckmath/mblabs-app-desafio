@@ -67,7 +67,7 @@ const Home = () => {
                                         </View>
 
                                         <View style={ styles.info_container }>
-                                            <Text style={ styles.info_text }>{ event.description }</Text>
+                                            <Text numberOfLines={2} style={ styles.info_text }>{ event.description }</Text>
                                         </View>
 
                                         <View style={ styles.bottom_info_container }>
