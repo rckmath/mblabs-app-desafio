@@ -63,6 +63,9 @@ const SignIn = () => {
             if(res.status == 200){
                 setEmail('');
                 setPass('');
+                setCpf('');
+                setPassConfirm('');
+                setName('');
                 setIsSignUp(false);
 
                 Alert.alert('Booouaaa', 'Cadastro efetuado com sucesso, agora é só logar e aproveitar o app ;)');
