@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, Image, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
-import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 class TagButton extends Component {
     render() {
         return (
             <View style={ styles.container }>
                 <TouchableOpacity>
-                    <Text style= { styles.title }>Tecnologia</Text>
+                    <Text style= { styles.title }>{ this.props.name }</Text>
                 </TouchableOpacity>
             </View>
         );

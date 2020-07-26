@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native'
 import Constants from 'expo-constants';
 import api from '../../services/api';
 
+import Card from '../../components/Card';
+
 const Search = () => {
     const navigation = useNavigation();
 
@@ -44,37 +46,17 @@ const Search = () => {
                     <Icon name='filter' size={ 14 } color='#F0F5F5'/>
                     <Text style={ styles.filter_text }>Filtros</Text>
                 </TouchableOpacity>
-                <View style={ styles.events_container }>
-                    <ScrollView
-                        vertical
-                        showsVerticalScrollIndicator={ false }
-                        contentContainerStyle={{ paddingVertical: 16 }}
-                    >
-                        {events.map(event => (
-                            <View style={ styles.event } key={ String(event.id) }>
-                                <TouchableOpacity onPress={ () => { handleNavigationToEventDetails(event) } }>
-                                    <Text style={ styles.event_title }>{ event.name }</Text>
-                                    <View style={ styles.tags_container }>
-                                        <Icon name='tag-multiple' size={ 18 } color='#8370AD' allowFontScaling/>
-                                        { event.categories.map(category => (
-                                            <View style={ styles.tag_container } key={ String(category.id) }>
-                                                <TouchableOpacity>
-                                                    <Text style= { styles.tag_title }>{ category.name }</Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                        ))}
-                                    </View>
-                                    <View style={ styles.info_container }>
-                                        <Text numberOfLines={2} style={ styles.info_text }>{ event.description }</Text>
-                                    </View>
-                                    <View style={ styles.bottom_info_container }>
-                                    <Text style={ styles.price_text }> { event.ticket_val > 0 ? 'R$ ' + event.ticket_val : 'Gratuito' } </Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
+                <ScrollView
+                    vertical
+                    showsVerticalScrollIndicator={ false }
+                    contentContainerStyle={{ paddingVertical: 16 }}
+                >
+                    <View style={ styles.events_container }>
+                        { events != undefined && (events.map(event => (
+                            <Card event={ event } navigation={ navigation } key={ event.id }/>)
                         ))}
-                    </ScrollView>
-                </View>
+                    </View>
+                </ScrollView>
             </SafeAreaView>
         </View>
     );
@@ -98,7 +80,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center',
         marginTop: 16,
-        marginBottom: 192
+        marginBottom: 80
     },
     input_box: {
         height: 32,
@@ -130,68 +112,6 @@ const styles = StyleSheet.create({
         color: '#F0F5F5',
         marginLeft: 4,
     },
-    event: {
-        flex: 1,
-        backgroundColor: '#f0f5f5',
-        borderWidth: 1,
-        borderColor: '#ddd',
-        height: 144,
-        width: 288,
-        borderRadius: 4,
-        paddingHorizontal: 16,
-        paddingTop: 8,
-        paddingBottom: 16,
-        marginRight: 8,
-        marginTop: 16,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        textAlign: 'center',
-    },
-    event_title: {
-        fontFamily: 'Ubuntu_700Bold',
-        textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 16,
-      },
-    tags_container: {
-        marginTop: 8,
-        flexDirection: 'row'
-    },
-    info_container: {
-        marginTop: 8,
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-    },
-    info_text: {
-        fontSize: 10,
-        marginTop: 8,
-        fontFamily: 'Roboto_400Regular',
-    },
-    bottom_info_container: {
-        marginTop: 8,
-    },
-    price_text: {
-        fontSize: 12,
-        fontFamily: 'Roboto_400Regular',
-        textAlign: 'right',
-        color: '#8370AD',
-        fontWeight: 'bold',
-    },
-    tag_container: {
-        backgroundColor: '#8370AD',
-        borderRadius: 32,
-        width: 60,
-        height: 14,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginHorizontal: 4
-    },
-    tag_title: {
-        fontSize: 10,
-        color: '#f0f5f5',
-        fontFamily: 'Roboto_400Regular'
-    }
 });
 
 export default Search;
