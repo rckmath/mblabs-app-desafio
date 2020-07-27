@@ -30,26 +30,27 @@ This app was developed for an intership at MB Labs.
 
 # Instructions
 
-1. Clone the repository\
-2. Create a .env file at the root of mblabs-app-backend with:
+1. Clone the repository
+2. Install NPM & Yarn
+3. Create a .env file at the root of mblabs-app-backend with:
 
+```
 PORT=1335
 
 DATABASE_HOST=name_of_host\
 DATABASE_NAME=name_of_database\
 DATABASE_USER=user_name\
-DATABASE_PASSWORD=database_pass\
+DATABASE_PASSWORD=database_pass
 
 TIMEZONE=your_timezone\
-LANGUAGE=your-language\
+LANGUAGE=your-language
 
-SECRET=your_secret\
+SECRET=your_secret
+```
 
-3. On api.js at mblabs-app-mobile, set the base URL to your host\
-4. With the terminal at the root of mblabs-app-backend: yarn run dev\
+3. On api.js at mblabs-app-mobile, set the base URL to your host
+4. With the terminal at the root of mblabs-app-backend: yarn run dev
 5. With the terminal at the root of mblabs-app-mobile: yarn start
-
-You'll need Yarn.
 
 # Special thanks to
 

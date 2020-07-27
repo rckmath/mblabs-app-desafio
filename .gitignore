@@ -226,7 +226,8 @@ dist
 
 mblabs-app-backend/node_modules/**/*
 mblabs-app-mobile/node_modules/**/*
-mblabs-app-mobile/.expo/
+mblabs-app-mobile/.expo/*
+mblabs-app-mobile/.expo-shared/*
 npm-debug.*
 *.jks
 *.p8
@@ -235,7 +236,3 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 mblabs-app-mobile/web-build/
-mblabs-app-mobile/.expo/packager-info.json
-mblabs-app-mobile/.expo/packager-info.json
-mblabs-app-mobile/.expo/packager-info.json
-mblabs-app-mobile/.expo/settings.json

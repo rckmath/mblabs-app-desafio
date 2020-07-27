@@ -1,10 +1,12 @@
-import React, { useState, useEffect, async } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, View, Text, TextInput, StyleSheet, ImageBackground, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
-import Constants from 'expo-constants';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
+import Constants from 'expo-constants';
+
 import api from '../../services/api';
 import { CpfMask } from '../../utils/CpfMask';
+import Input from '../../components/Input';
 
 const SignIn = () => {
     const navigation = useNavigation();
@@ -17,6 +19,7 @@ const SignIn = () => {
     const [isSignUp, setIsSignUp] = useState(false);
     const [icon, setIcon] = useState('eye-off');
     const [hidePassword, setHidePassword] = useState(true);
+    const [value, setValue] = useState('');
     
     _changeIcon = () => {
         icon !== 'eye-off'
@@ -97,39 +100,13 @@ const SignIn = () => {
                     {
                         isSignUp &&
                         <>
-                            <Text style={ styles.input_title }>Nome completo:</Text>
-                            <TextInput
-                                style={ styles.input_box }
-                                placeholder='Insira seu nome completo'
-                                placeholderTextColor="#AAA"
-                                onChangeText={ text => setName(text) }
-                                defaultValue={ name }
-                                value={ name }
-                                onFocus={ () => {  } }
-                            />
-                            <Text style={ styles.input_title }>CPF:</Text>
-                            <TextInput
-                                style={ styles.input_box }
-                                placeholder='Insira seu CPF'
-                                placeholderTextColor="#AAA"
-                                onChangeText={ text => handleCpfFieldChange(text) }
-                                value={ cpf }
-                                keyboardType='number-pad'
-                                onChange={ () => { handleCpfFieldChange(cpf) } }
-                            />
+                            <Input val={ name } name='Nome' field='nome completo' setVal={ setName.bind(this) }/>
+                            <Input val={ cpf } name='CPF' field='CPF' setVal={ handleCpfFieldChange.bind(this) }/>
                         </>
                     }
 
-                    <Text style={ styles.input_title }>E-mail:</Text>
-                    <TextInput
-                        style={ styles.input_box }
-                        placeholder='Insira seu e-mail'
-                        placeholderTextColor="#AAA"
-                        onChangeText={ text => setEmail(text) }
-                        defaultValue={ email }
-                        value={ email }
-                        keyboardType='email-address'
-                    />
+                    <Input val={ email } name='E-mail' field='email' setVal={ setEmail.bind(this) }/>
+
                     <Text style={ styles.input_title }>Senha:</Text>
                     <View style={ styles.input_pass }>
                         <TextInput
@@ -141,7 +118,7 @@ const SignIn = () => {
                             defaultValue={ pass }
                             value={ pass }
                         />
-                        <Icon style={ styles.input_icon } name={icon} size={ 20 } onPress={() => _changeIcon()} color='#8370AD'/>
+                        <Icon style={ styles.input_icon } name={icon} size={ 22 } onPress={() => _changeIcon()} color='#8370AD'/>
                     </View>
                 
                     {
@@ -172,9 +149,6 @@ const SignIn = () => {
         </ImageBackground>
     );
 };
-
-
-// 
 
 const styles = StyleSheet.create({
     container: {
@@ -210,7 +184,7 @@ const styles = StyleSheet.create({
     input_icon: {
         position: 'absolute',
         marginLeft: 256,
-        padding: 6,
+        padding: 3,
     },
     input_pass: {
         flexDirection: 'row',

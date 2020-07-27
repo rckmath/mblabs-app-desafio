@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 
-import TagButton from './TagButton';
+import TagButton from './Buttons/TagButton';
 
 function handleNavigationToEventDetails(event, navigation) {
     navigation.navigate('DetalhesEvento', {
